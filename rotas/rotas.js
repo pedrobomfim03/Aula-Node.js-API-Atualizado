@@ -5,6 +5,6 @@ const fileSystem = require("../fs/filesystem.js");
 let rotasProduto = require("./rotas-produto.js");
 rotasProduto.fileSystem = fileSystem;
 rotasProduto.utils = utils;
-rotasProduto.adicionarRotasProduto(app,fileSystem,utils);
+app.use("/produto",rotasProduto.pegarRotasProduto(app.dirName));
 
 module.exports = app;
