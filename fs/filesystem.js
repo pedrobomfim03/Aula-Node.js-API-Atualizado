@@ -10,25 +10,11 @@ module.exports = {
     },
 
     lerArquivo: function(){        
-        return new Promise(function(resolve,reject){
-            this.fs.readFile(this.diretorio,{encoding:"UTF-8"},(err,dados)=>{
-                if(err){
-                    return reject(err);
-                }
-                resolve(JSON.parse(dados));
-            });
-        }.bind(this));
+        return this.fs.promises.readFile(this.diretorio,{encoding:"UTF-8"});
     },
 
     escreverArquivo: function(dados){
-        return new Promise(function(resolve,reject){
-            this.fs.writeFile(this.diretorio,JSON.stringify(dados),(err)=>{
-                if(err){
-                    return reject(err);
-                }
-                resolve();
-            });
-        }.bind(this))
+        return this.fs.promises.writeFile(this.diretorio,JSON.stringify(dados),{encoding:"UTF-8"});
     },
 
 }

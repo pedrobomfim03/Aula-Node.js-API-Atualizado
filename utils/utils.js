@@ -14,6 +14,7 @@ module.exports = {
     pegarMaiorId:(listaItens)=>{
         let numeroMaior = 1;
         if(listaItens!=undefined){
+            console.log(listaItens);
             listaItens.forEach((item)=>{
                 numeroMaior = item.id>numeroMaior?item.id:numeroMaior;
             });

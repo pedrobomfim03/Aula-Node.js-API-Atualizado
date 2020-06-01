@@ -16,8 +16,8 @@ module.exports = {
         try{
             let existe = this.fileSystem.existeArquivo();
             existe.then(async function(){
-                let dados = await this.fileSystem.lerArquivo();
-                this.utils.enviarOk(res,dados);
+                let produtos = JSON.parse(await this.fileSystem.lerArquivo());
+                this.utils.enviarOk(res,produtos);
             }.bind(this)).catch(function(){
                 this.fileSystem.escreverArquivo([]);
                 this.utils.enviarOk(res,"[]");
@@ -32,8 +32,8 @@ module.exports = {
         try{
             let existe = this.fileSystem.existeArquivo();
             existe.then(async function(){
-                let dados = await this.fileSystem.lerArquivo();
-                this.utils.enviarOk(res,dados.find((item)=>item.id==req.params.id));
+                let produtos = JSON.parse(await this.fileSystem.lerArquivo());
+                this.utils.enviarOk(res,produtos.find((item)=>item.id==req.params.id));
             }.bind(this)).catch(function(){
                 this.fileSystem.escreverArquivo([]);
                 this.utils.enviarErro(res,"Produto não encontrado.");
@@ -47,7 +47,7 @@ module.exports = {
     criarProduto: async function(req,res){
 
         try{
-            let produtos = await this.fileSystem.lerArquivo();
+            let produtos = JSON.parse(await this.fileSystem.lerArquivo());
             req.body.id = this.utils.pegarMaiorId(produtos)+1;
             produtos.push(req.body);
             await this.fileSystem.escreverArquivo(produtos);
@@ -61,7 +61,7 @@ module.exports = {
 
     editarProduto: async function(req,res){
         try{
-            let produtos = await this.fileSystem.lerArquivo();
+            let produtos = JSON.parse(await this.fileSystem.lerArquivo());
             let indice = this.utils.encontrarItem(produtos,req.params.id);
             if(indice==-1){
                 this.utils.enviarErro(res,"O produto com o indice informado não existe!");
@@ -79,7 +79,7 @@ module.exports = {
 
     excluirProduto: async function(req,res){
         try{
-            let produtos = await this.fileSystem.lerArquivo();
+            let produtos = JSON.parse(await this.fileSystem.lerArquivo());
             let indice = this.utils.encontrarItem(produtos,req.params.id);
             if(indice==-1){
                 this.utils.enviarErro(res,"O produto com o indice informado não existe!");
